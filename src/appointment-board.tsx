@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card"
 import { format, parseISO } from 'date-fns'
-import { Calendar, Clock, User, Activity, Folder, AlertCircle } from 'lucide-react'
+import { Calendar, Clock, User, Activity, AlertCircle } from 'lucide-react'
 
 type Appointment = {
   entities: {
