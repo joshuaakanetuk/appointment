@@ -30,16 +30,15 @@ export function AppointmentBoardComponent() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Simulating an API call
     const fetchAppointments = async () => {
       try {
-        // Replace this with your actual API call
-        const response = await fetch('https://servicescheduling.bestbuy.com/api/api/QueueBoard/pr?locationId=422')
+        const response = await fetch('https://nodemation.up.railway.app/webhook/578c89f1-5fdd-4e71-a705-7eb0abbc1b05')
         if (!response.ok) {
           throw new Error('Failed to fetch appointments')
         }
         const data = await response.json()
-        setAppointments(data)
+        console.log(data)
+        setAppointments(data.data)
       } catch (err) {
         console.log(err)
         setError('Failed to load appointments. Please try again later.')
@@ -51,7 +50,7 @@ export function AppointmentBoardComponent() {
     fetchAppointments()
   }, [])
 
-  if (isLoading) {
+  if (isLoading || appointments.length === 0) {
     return <div className="text-center p-4">Loading appointments...</div>
   }
 
@@ -87,10 +86,10 @@ export function AppointmentBoardComponent() {
                   <Activity className="mr-2" size={18} />
                   <span>{appointment.entities.activity.label}</span>
                 </div>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <Folder className="mr-2" size={18} />
                   <span>{appointment.entities.progam.label}</span>
-                </div>
+                </div> */}
                 <div className="flex items-center">
                   <Calendar className="mr-2" size={18} />
                   <span>{format(parseISO(appointment.scheduledTime), 'MMMM d, yyyy')}</span>
@@ -98,8 +97,9 @@ export function AppointmentBoardComponent() {
                 <div className="flex items-center">
                   <Clock className="mr-2" size={18} />
                   <span>
-                    {format(parseISO(appointment.scheduledTime), 'h:mm a')} - 
-                    {format(parseISO(appointment.scheduledEndTime), 'h:mm a')}
+                    {format(parseISO(appointment.scheduledTime), 'h:mm a')} -{" "} 
+
+                     {format(parseISO(appointment.scheduledEndTime), 'h:mm a')}
                   </span>
                 </div>
               </div>
